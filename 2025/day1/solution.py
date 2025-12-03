@@ -1,8 +1,3 @@
-# /// script
-# requires-python = ">=3.12"
-# dependencies = []
-# ///
-
 import pathlib
 
 def solve():
@@ -19,7 +14,6 @@ def solve():
     part1_zeros = 0
     part2_zeros = 0
     
-    # Dial size is 100 (0-99)
     MOD = 100
 
     for line in lines:
@@ -30,21 +24,17 @@ def solve():
             print(f"Warning: Skipping invalid line: {line}")
             continue
 
-        # Part 2 logic: count all zeros passed
         full_circles = amount // MOD
         part2_zeros += full_circles
         rem = amount % MOD
 
         if direction == 'R':
-            # Check if we cross 0 in the remaining steps
-            # We cross 0 if current_pos + rem >= 100
+
             if current_pos + rem >= MOD:
                 part2_zeros += 1
             current_pos = (current_pos + amount) % MOD
         elif direction == 'L':
-            # Check if we cross 0 in the remaining steps
-            # We cross 0 if current_pos != 0 and rem >= current_pos
-            # (If current_pos is 0, the first step goes to 99, so we don't hit 0 immediately)
+
             if current_pos != 0 and rem >= current_pos:
                 part2_zeros += 1
             current_pos = (current_pos - amount) % MOD
