@@ -20,7 +20,7 @@ The project is organized by year and day:
 To run a specific day's solution, execute the python script directly. For example, for Day 3 of 2025:
 
 ```bash
-python3 2025/day3/solution.py
+uv run python3 2025/day3/solution.py
 ```
 
 ## Requirements
