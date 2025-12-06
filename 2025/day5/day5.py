@@ -13,14 +13,12 @@ def solve():
     for line in lines:
         line = line.strip()
         if not line:
-            # If we encounter a blank line and we have already parsed some ranges,
-            # switch to parsing IDs.
+
             if parsing_ranges and ranges:
                 parsing_ranges = False
             continue
             
         if parsing_ranges:
-            # Ranges look like "3-5"
             if '-' in line:
                 try:
                     start, end = map(int, line.split('-'))
@@ -28,7 +26,6 @@ def solve():
                 except ValueError:
                     pass
         else:
-            # IDs look like "1"
             try:
                 ids.append(int(line))
             except ValueError:
@@ -41,7 +38,27 @@ def solve():
                 fresh_count += 1
                 break
                 
-    print(f"Fresh ingredients: {fresh_count}")
+    print(f"Fresh ingredients (Part 1): {fresh_count}")
+
+    # Part 2: Count total unique fresh IDs in ranges
+    ranges.sort()
+    merged_ranges = []
+    if ranges:
+        curr_start, curr_end = ranges[0]
+        for i in range(1, len(ranges)):
+            next_start, next_end = ranges[i]
+            # Merge if overlapping or adjacent (since we are counting integers)
+            # Example: 1-2 and 3-4 -> 1,2,3,4 -> 1-4. 
+            # Overlap condition: next_start <= curr_end + 1
+            if next_start <= curr_end + 1:
+                curr_end = max(curr_end, next_end)
+            else:
+                merged_ranges.append((curr_start, curr_end))
+                curr_start, curr_end = next_start, next_end
+        merged_ranges.append((curr_start, curr_end))
+        
+    total_fresh_ids = sum(end - start + 1 for start, end in merged_ranges)
+    print(f"Total fresh IDs (Part 2): {total_fresh_ids}")
 
 if __name__ == '__main__':
     solve()
