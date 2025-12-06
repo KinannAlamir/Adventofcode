@@ -6,7 +6,6 @@ def solve():
     with open(input_path, 'r') as f:
         lines = f.read().splitlines()
     
-    # Remove empty lines at the end if any
     while lines and not lines[-1].strip():
         lines.pop()
         
@@ -16,7 +15,6 @@ def solve():
     max_len = max(len(line) for line in lines)
     padded_lines = [line.ljust(max_len) for line in lines]
     
-    # Identify empty columns
     empty_cols = []
     for col in range(max_len):
         is_empty = True
@@ -84,19 +82,15 @@ def solve():
         
     print(f"Grand total (Part 1): {grand_total}")
 
-    # Part 2
     grand_total_part2 = 0
     for block in blocks:
-        # Find operator row (same logic as Part 1)
         operator_row_idx = -1
         operator = None
         
-        # Check last row first
         if block[-1].strip() in ('+', '*'):
             operator = block[-1].strip()
             operator_row_idx = len(block) - 1
         else:
-            # Search upwards
             for i in range(len(block) - 1, -1, -1):
                 row_content = block[i].strip()
                 if row_content in ('+', '*'):
@@ -111,11 +105,9 @@ def solve():
         if not numbers_rows:
             continue
             
-        # Parse numbers column by column
         numbers = []
         width = len(numbers_rows[0])
         
-        # Iterate columns (order doesn't matter for +/*, but problem says right-to-left)
         for col in range(width - 1, -1, -1):
             digits = []
             for row in numbers_rows:
