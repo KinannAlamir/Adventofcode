@@ -40,16 +40,13 @@ def solve():
                 
     print(f"Fresh ingredients (Part 1): {fresh_count}")
 
-    # Part 2: Count total unique fresh IDs in ranges
     ranges.sort()
     merged_ranges = []
     if ranges:
         curr_start, curr_end = ranges[0]
         for i in range(1, len(ranges)):
             next_start, next_end = ranges[i]
-            # Merge if overlapping or adjacent (since we are counting integers)
-            # Example: 1-2 and 3-4 -> 1,2,3,4 -> 1-4. 
-            # Overlap condition: next_start <= curr_end + 1
+   
             if next_start <= curr_end + 1:
                 curr_end = max(curr_end, next_end)
             else:
